@@ -22,7 +22,7 @@ public class Course implements ICourse{
 
     //Code must have length 6 chars
     @NotNull(message = "Code must not be null")
-    @Size(max = 4, message = "Code must have length 6 chars")
+    @Size(max = 4, message = "Code must have length 4 chars")
     @Column
     private String code;
 

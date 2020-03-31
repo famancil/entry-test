@@ -46,8 +46,6 @@ In the file application.properties, there is a route to access a MySQL instance 
 
 ## Present Problem
 
-The most challenged
-
 The biggest challenge has been uploading the API REST server to the GCP, although an instance was created to communicate 
 with MySQL, it has not been possible upload correctly (the best achieved is uploading the service but not being able 
 to connect to the MySQL instance, getting a 502 Bad Gateway).
