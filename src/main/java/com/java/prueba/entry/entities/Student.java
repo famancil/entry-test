@@ -10,6 +10,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+/**
+ * Entity that maps the student's table
+ */
 @Entity(name = "student")
 public class Student implements IStudent {
 
@@ -17,25 +20,28 @@ public class Student implements IStudent {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
     @Column
+    @NotNull(message = "Rut must not be null")
     private String rut;
     @Column
     private String name;
     @Column
     private String lastName;
+
+    //Age must be 19 at least
     @Column
     @NotNull(message = "Age must not be null")
-    //@Range(min=1, max=10000,message = "Age must be 18 at least")
     @Min(value = 19, message = "Age must be 19 at least")
     private int age;
 
-    /*@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<Course> courses;*/
+    @Column(insertable = false, updatable = false)
+    private long course_id;
 
     @ManyToOne
     @JoinColumn
     @NotNull(message = "Student must have a course")
     private Course course;
 
+    //Constructor
     public Student(String rut,String name,String lastName,int age){
         this.rut = rut;
         this.name = name;
@@ -45,6 +51,7 @@ public class Student implements IStudent {
 
     public Student(){}
 
+    //Getters and Setters
     @Override
     public long getId() {
         return id;
@@ -113,5 +120,13 @@ public class Student implements IStudent {
     @JsonIgnore
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public long getCourse_id() {
+        return course_id;
+    }
+
+    public void setCourse_id(long course_id) {
+        this.course_id = course_id;
     }
 }

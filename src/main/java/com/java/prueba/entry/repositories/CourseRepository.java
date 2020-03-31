@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * Repository that makes nexus between the entity Course and his table in DB.
+ */
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Long> {
 }

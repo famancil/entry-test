@@ -1,5 +1,8 @@
 package com.java.prueba.entry.entities;
 
+/**
+ * Interface for implement Course class.
+ */
 public interface ICourse {
 
     public long getId();

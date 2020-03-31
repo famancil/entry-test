@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+/**
+ * Controller for management courses.
+ */
 @RestController
 @RequestMapping("/courses")
 public class CourseController implements ICourseController {
@@ -33,6 +36,11 @@ public class CourseController implements ICourseController {
     @Override
     public Page<ICourse> findAllIPage(Pageable pageable) { return null;}
 
+    /**
+     * Return the first 15 courses as a Page.
+     * @param pageable
+     * @return Page of Course.
+     */
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<Page<Course>> findAllPage(Pageable pageable) {
 
@@ -50,6 +58,10 @@ public class CourseController implements ICourseController {
     @Override
     public List<ICourse> findIAll() { return null; }
 
+    /**
+     * Return a List of Course.
+     * @return Response Entity of List Of Course.
+     */
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     public ResponseEntity<List<Course>> findAll(Pageable pageable) {
 
@@ -69,6 +81,11 @@ public class CourseController implements ICourseController {
     @Override
     public ICourse findIById(Long id) { return null; }
 
+    /**
+     * Return a course with a specific id.
+     * @param id
+     * @return Response Entity of Course
+     */
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public ResponseEntity<Course> findById(@PathVariable(value = "id") Long id) {
 
@@ -78,6 +95,8 @@ public class CourseController implements ICourseController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
             return new ResponseEntity<>(courseResult, HttpStatus.OK);
+        } catch (NoSuchElementException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -86,19 +105,30 @@ public class CourseController implements ICourseController {
     @Override
     public ICourse Isave(ICourse course) { return null;}
 
+    /**
+     * Return a course saved in database
+     * @param course
+     * @return Response Entity of Course
+     */
     @RequestMapping(method = RequestMethod.POST, consumes="application/json")
     public ResponseEntity<Course> save(@RequestBody Course course) {
 
         try {
             Course _course = courseService.save(course);
             return new ResponseEntity<>(_course, HttpStatus.CREATED);
-        }catch (RollbackException | ConstraintViolationException | TransactionSystemException e){
+        }catch (NoSuchElementException | RollbackException | ConstraintViolationException | TransactionSystemException e){
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    /**
+     * Return a course updated in database
+     * @param id
+     * @param course
+     * @return Response Entity of Course
+     */
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT, consumes="application/json")
     public ResponseEntity<Course> update(@PathVariable(value = "id") Long id, @RequestBody Course course) {
         try {
@@ -111,6 +141,8 @@ public class CourseController implements ICourseController {
                 _course.setCode(course.getCode());
                 return new ResponseEntity<>(courseService.save(_course), HttpStatus.OK);
             }
+        } catch (NoSuchElementException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (RollbackException | ConstraintViolationException | TransactionSystemException e){
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -118,6 +150,11 @@ public class CourseController implements ICourseController {
         }
     }
 
+    /**
+     * Remove a course with specific id.
+     * @param id
+     * @return Response Entity of HttpStatus
+     */
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     @Override
     public ResponseEntity<HttpStatus> deleteById(@PathVariable(value = "id") Long id) {
@@ -127,8 +164,7 @@ public class CourseController implements ICourseController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

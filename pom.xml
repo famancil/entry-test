@@ -15,7 +15,10 @@
 	<description>Prueba Entry 23people</description>
 
 	<properties>
-		<java.version>14</java.version>
+		<java.version>9</java.version>
+		<start-class>com.java.prueba.entry.EntryApplication</start-class>
+		<app.deploy.projectId>glassy-proton-272719</app.deploy.projectId>
+		<app.deploy.version>v1</app.deploy.version>
 	</properties>
 
 	<dependencies>
@@ -67,11 +70,23 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>appengine-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<classifier>exec</classifier>
-				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<classifier>spring-boot</classifier>
+							<mainClass>${start-class}</mainClass>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

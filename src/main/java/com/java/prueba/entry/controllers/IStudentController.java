@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+/**
+ * Interface for implement Course's Controller
+ */
 public interface IStudentController {
 
     public Page<IStudent> findAllIPage(Pageable pageable);

@@ -6,6 +6,9 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+/**
+ * Interface for implements service(s) of course.
+ */
 public interface ICourseService {
 
     public Page<Course> findAllPage(Pageable pageable);

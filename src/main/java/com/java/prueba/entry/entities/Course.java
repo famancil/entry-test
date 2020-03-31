@@ -8,6 +8,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+/**
+ * Entity that maps the course's table
+ */
 @Entity(name = "course")
 public class Course implements ICourse{
 
@@ -17,6 +20,7 @@ public class Course implements ICourse{
     @Column
     private String name;
 
+    //Code must have length 6 chars
     @NotNull(message = "Code must not be null")
     @Size(max = 4, message = "Code must have length 6 chars")
     @Column
@@ -25,13 +29,16 @@ public class Course implements ICourse{
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Student> students;
 
+    //Constructor
     public Course(String name, String code){
         this.name = name;
         this.code = code;
     }
 
+    //Constructor
     public Course(){}
 
+    //Getters and Setters
     @Override
     public long getId() {
         return id;

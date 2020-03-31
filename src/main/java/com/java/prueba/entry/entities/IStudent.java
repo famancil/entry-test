@@ -2,6 +2,9 @@ package com.java.prueba.entry.entities;
 
 import java.util.List;
 
+/**
+ * Interface for implement Student class.
+ */
 public interface IStudent {
     public long getId();
     public void setId(long id);
